@@ -109,3 +109,10 @@ def roi_extract(scan_img, roi_img, fname, seg_type, save_dir):
 
 
 ```
+
+## mkdir -p
+
+```python
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
+```
