@@ -116,3 +116,54 @@ def roi_extract(scan_img, roi_img, fname, seg_type, save_dir):
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 ```
+
+
+## Correlation Matrix
+
+```python
+# Compute the correlation matrix
+corr = proc_df.corr()
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Draw the heatmap with the mask and correct aspect ratio
+sns.heatmap(corr, mask=mask, cmap=cmap, # vmax=,
+            center=0,
+            square=True, linewidths=.5, cbar_kws={"shrink": .5})
+
+```
+
+## dots and line
+
+```python
+
+# sns.set_theme(font_scale=1.25)
+sns.set_theme()
+sns.set_style("ticks")
+def relandreg_plot(x_axis, y_axis, proc_df):
+    sns_plot = sns.relplot(x= x_axis, y= y_axis, hue="CKD Stage",
+                # size="Weight(kg)", sizes=(50,150),
+                # size="Cyst_Vol.(ml)", sizes=(50,150),
+                style="Side", # sizes=(100,150),
+                height=3,
+                aspect=1.25,
+                s=100,
+                legend=False,
+                data=proc_df)
+    sns.regplot(x= x_axis, y= y_axis, data=proc_df,
+                scatter=False, ci=None,
+                color='lightgray', ax=sns_plot.axes[0, 0],
+                truncate=False)
+    # print(p.get_children()[1].get_paths())
+    # plt.ylim(0, None)
+    return sns_plot
+```
+
+
